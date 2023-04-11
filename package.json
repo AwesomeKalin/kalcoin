@@ -11,9 +11,12 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "bitcore-lib": "^10.0.3",
+    "bitcore-message": "^1.0.4",
     "kalhash.js": "^1.0.0"
   },
   "devDependencies": {
+    "@types/node": "^18.15.11",
     "typescript": "^5.0.4"
   }
 }
