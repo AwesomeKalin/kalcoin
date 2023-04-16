@@ -1,3 +1,4 @@
+import fs from "fs";
 import { CryptoBlock } from "./CryptoBlock.js";
 
 export class CryptoBlockchain {
@@ -36,5 +37,10 @@ export class CryptoBlockchain {
             }
         }
         return true;
+    }
+
+    async writeToDisk() {
+        fs.writeFileSync('./blockchain.kal', JSON.stringify(this.blockchain));
+        console.log('Saved blockchain to disk');
     }
 }
