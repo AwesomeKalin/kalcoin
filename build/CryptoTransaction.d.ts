@@ -4,7 +4,8 @@ export declare class CryptoTransaction {
     hash: string;
     signedHash: string;
     from: string;
-    constructor(timestamp: number, data: any, from: string);
+    txFee: number;
+    constructor(timestamp: number, data: any, from: string, txFee: number);
     computeHash(privateKey: string): void;
     verifyHash(address: string, signature: string): any;
 }

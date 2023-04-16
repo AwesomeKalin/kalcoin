@@ -7,14 +7,16 @@ export class CryptoTransaction {
     hash = '';
     signedHash = '';
     from;
-    constructor(timestamp, data, from) {
+    txFee;
+    constructor(timestamp, data, from, txFee) {
         this.timestamp = timestamp;
         this.data = data;
         this.from = from;
+        this.txFee = txFee;
     }
     computeHash(privateKey) {
         const address = new bitcore.PrivateKey(privateKey);
-        this.hash = kalhash(this.from + this.timestamp + this.data);
+        this.hash = kalhash(this.from + this.timestamp + this.data + this.txFee);
         this.signedHash = new bitcore.Message(this.hash).sign(address);
     }
     verifyHash(address, signature) {
@@ -25,7 +27,7 @@ export class CryptoTransaction {
             scriptHash: 0x28,
             port: 50576
         }));
-        if (kalhash(this.from + this.timestamp + this.data) === this.hash) {
+        if (kalhash(this.from + this.timestamp + this.data + this.txFee) === this.hash) {
             return new bitcore.Message(this.hash).verify(addr, signature);
         }
         else

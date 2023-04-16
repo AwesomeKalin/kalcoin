@@ -4,8 +4,9 @@ export declare class CryptoBlock {
     data: any;
     precedingHash: string;
     hash: string;
-    nonce: number;
+    nonce: string;
     constructor(index: number, timestamp: number, data: any, precedingHash?: string);
     computeHash(): any;
+    generate256bitnumber(): string;
     proofOfWork(difficulty: number): void;
 }
