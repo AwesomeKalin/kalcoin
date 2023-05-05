@@ -1,17 +1,12 @@
 import { deleteFromArray } from "../util/lists.js";
-import { CryptoTransaction } from "./CryptoTransaction.js";
-
 export class TransactionQueue {
-    queue: Array<CryptoTransaction>;
-
+    queue;
     constructor() {
         this.queue = [];
     }
-
-    add(transaction: CryptoTransaction) {
+    add(transaction) {
         this.queue.push(transaction);
     }
-
     garbageCollect() {
         for (var i = 0; i < this.queue.length; i++) {
             if (Math.floor(new Date().getTime() / 1000) - this.queue[i].timestamp > 7200) {
@@ -19,22 +14,17 @@ export class TransactionQueue {
             }
         }
     }
-
     sortByTxFee() {
         this.queue.sort((a, b) => this.calculateTxFee(b) - this.calculateTxFee(a));
     }
-
-    calculateTxFee(tx: CryptoTransaction): number {
-        let inputValue: number = 0, outputValue: number = 0;
-
+    calculateTxFee(tx) {
+        let inputValue = 0, outputValue = 0;
         for (var i = 0; i < tx.inputs.length; i++) {
             inputValue += tx.inputs[i].output.value;
         }
-
         for (var i = 0; i < tx.outputs.length; i++) {
             outputValue += tx.outputs[i].value;
         }
-
         return outputValue - inputValue;
     }
 }

@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
+    "@types/yargs": "^17.0.24",
     "typescript": "^5.0.4"
   },
   "snyk": true

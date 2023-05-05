@@ -36,6 +36,9 @@ devDependencies:
   '@types/node':
     specifier: ^20.0.0
     version: 20.0.0
+  '@types/yargs':
+    specifier: ^17.0.24
+    version: 17.0.24
   typescript:
     specifier: ^5.0.4
     version: 5.0.4
@@ -948,6 +951,16 @@ packages:
   /@types/sinonjs__fake-timers@8.1.2:
     resolution: {integrity: sha512-9GcLXF0/v3t80caGs5p2rRfkB+a8VBGLJZVih6CNFkx8IZ994wiKKLSRs9nuFwk1HevWs/1mnUmkApGrSGsShA==}
     dev: false
+
+  /@types/yargs-parser@21.0.0:
+    resolution: {integrity: sha512-iO9ZQHkZxHn4mSakYV0vFHAVDyEOIJQrV2uZ06HxEPcx+mt8swXoZHIbaaJ2crJYFfErySgktuTZ3BeLz+XmFA==}
+    dev: true
+
+  /@types/yargs@17.0.24:
+    resolution: {integrity: sha512-6i0aC7jV6QzQB8ne1joVZ0eSFIstHsCrobmOtghM11yGlH0j43FKL2UhWdELkyps0zuf7qVTUVCCR+tgSlyLLw==}
+    dependencies:
+      '@types/yargs-parser': 21.0.0
+    dev: true
 
   /abortable-iterator@4.0.2:
     resolution: {integrity: sha512-SJGELER5yXr9v3kiL6mT5RZ1qlyJ9hV4nm34+vfsdIM1lp3zENQvpsqKgykpFLgRMUn3lzlizLTpiOASW05/+g==}
