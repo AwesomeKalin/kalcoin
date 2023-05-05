@@ -13,10 +13,15 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@chainsafe/libp2p-noise": "^11.0.4",
+    "@libp2p/kad-dht": "^8.0.9",
+    "@libp2p/mplex": "^7.1.7",
+    "@libp2p/tcp": "^6.2.1",
+    "@snyk/protect": "latest",
     "bitcore-lib": "^10.0.3",
     "bitcore-message": "^1.0.4",
     "kalhash.js": "^1.0.0",
-    "@snyk/protect": "latest"
+    "libp2p": "^0.44.0"
   },
   "devDependencies": {
     "@types/node": "^18.15.11",

@@ -7,19 +7,27 @@ export class CryptoTransaction {
     data: any;
     hash: string = '';
     signedHash: string = '';
-    from: string;
-    txFee: number;
+    inputs: Array<string>;
+    outputs: Array<string>;
 
-    constructor(timestamp: number, data: any, from: string, txFee: number) {
+    constructor(timestamp: number, data?: any, inputs?: Array<string>, outputs?: Array<string>) {
         this.timestamp = timestamp;
         this.data = data;
-        this.from = from;
-        this.txFee = txFee;
+        if (inputs == undefined) {
+            this.inputs = [];
+        } else {
+            this.inputs = inputs;
+        }
+        if (outputs == undefined) {
+            this.outputs = [];
+        } else {
+            this.outputs = outputs;
+        }
     }
 
     computeHash(privateKey: string) {
         const address = new bitcore.PrivateKey(privateKey)
-        this.hash = kalhash(this.from + this.timestamp + this.data + this.txFee);
+        this.hash = kalhash(this.inputs + this.timestamp.toString() + this.data + this.outputs);
         this.signedHash = new bitcore.Message(this.hash).sign(address);
     }
 
