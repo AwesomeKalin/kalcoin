@@ -1,11 +1,11 @@
 //@ts-expect-error
 import { kalhash } from 'kalhash.js';
 
-class CryptoOutput {
+export class CryptoOutput {
     to: string;
     value: number;
     hash: string;
-    timestamp: number = Math.floor(new Date().getTime() / 1000)
+    timestamp: number = Math.floor(new Date().getTime() / 1000);
 
     constructor(to: string, value: number) {
         this.to = to;

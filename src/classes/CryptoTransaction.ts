@@ -1,32 +1,37 @@
 import bitcore from 'bitcore-lib';
 //@ts-expect-error
 import { kalhash } from 'kalhash.js';
+import { CryptoOutput } from './CryptoOutput.js';
+import { CryptoInput } from './CryptoInput.js';
 
 export class CryptoTransaction {
     timestamp: number;
     data: any;
     hash: string = '';
     signedHash: string = '';
-    inputs: Array<string>;
-    outputs: Array<string>;
+    inputs: Array<CryptoInput>;
+    outputs: Array<CryptoOutput>;
 
-    constructor(timestamp: number, data?: any, inputs?: Array<string>, outputs?: Array<string>) {
+    constructor(timestamp: number, privateKeyList: Array<string>, inputs: Array<CryptoOutput>, data?: any, outputs?: Array<CryptoOutput>) {
         this.timestamp = timestamp;
         this.data = data;
-        if (inputs == undefined) {
-            this.inputs = [];
-        } else {
-            this.inputs = inputs;
-        }
         if (outputs == undefined) {
             this.outputs = [];
         } else {
             this.outputs = outputs;
+        }if (inputs == undefined) {
+            this.inputs = [];
+        } else {
+            let inp: Array<CryptoInput> = [];
+            for (var i = 0; i < inputs.length; i++) {
+                inp.push(new CryptoInput(inputs[i], privateKeyList[i], outputs || []));
+            }
+            this.inputs = inp;
         }
     }
 
     computeHash(privateKey: string) {
-        const address = new bitcore.PrivateKey(privateKey)
+        const address = new bitcore.PrivateKey(privateKey);
         this.hash = kalhash(this.inputs + this.timestamp.toString() + this.data + this.outputs);
         this.signedHash = new bitcore.Message(this.hash).sign(address);
     }
@@ -39,7 +44,7 @@ export class CryptoTransaction {
             scriptHash: 0x28,
             port: 50576
         }));
-        if (kalhash(this.from + this.timestamp + this.data + this.txFee) === this.hash) {
+        if (kalhash(this.inputs + this.timestamp.toString() + this.data + this.outputs) === this.hash) {
             return new bitcore.Message(this.hash).verify(addr, signature);
         } else return false;
     }
