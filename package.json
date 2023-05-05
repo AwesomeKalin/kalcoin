@@ -14,17 +14,18 @@
   "license": "MIT",
   "dependencies": {
     "@chainsafe/libp2p-noise": "^11.0.4",
-    "@libp2p/kad-dht": "^8.0.9",
-    "@libp2p/mplex": "^7.1.7",
-    "@libp2p/tcp": "^6.2.1",
+    "@libp2p/kad-dht": "^9.2.0",
+    "@libp2p/mplex": "^8.0.1",
+    "@libp2p/tcp": "^7.0.1",
     "@snyk/protect": "latest",
-    "bitcore-lib": "^10.0.3",
+    "bitcore-lib": "^10.0.5",
     "bitcore-message": "^1.0.4",
     "kalhash.js": "^1.0.0",
-    "libp2p": "^0.44.0"
+    "libp2p": "^0.44.0",
+    "yargs": "^17.7.2"
   },
   "devDependencies": {
-    "@types/node": "^18.15.11",
+    "@types/node": "^20.0.0",
     "typescript": "^5.0.4"
   },
   "snyk": true
