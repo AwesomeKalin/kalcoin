@@ -6,10 +6,14 @@ export class CryptoBlockchain {
     difficulty: number = 6;
 
     constructor() {
-        this.blockchain = [this.startGenesisBlock()];
+        try {
+            this.blockchain = JSON.parse(fs.readFileSync('./blockchain.kal', 'utf8'));
+        } catch {
+            this.blockchain = [this.startGenesisBlock()];
+        }
     }
 
-    startGenesisBlock(){
+    startGenesisBlock() {
         return new CryptoBlock(0, 1681232132, "Not the final genesis block", "0");
     }
 
@@ -26,7 +30,7 @@ export class CryptoBlockchain {
     checkChainValidity() {
         for (let i = 1; i < this.blockchain.length; i++) {
             const currentBlock = this.blockchain[i];
-            const precedingBlock = this.blockchain[i-1];
+            const precedingBlock = this.blockchain[i - 1];
 
             if (currentBlock.hash !== currentBlock.computeHash()) {
                 return false;
@@ -40,7 +44,7 @@ export class CryptoBlockchain {
     }
 
     async writeToDisk() {
-        fs.writeFileSync('./blockchain.kal', JSON.stringify(this.blockchain));
+        fs.writeFileSync('./blockchain.kal', JSON.stringify(this.blockchain), "utf-8");
         console.log('Saved blockchain to disk');
     }
 }

@@ -6,26 +6,29 @@ import { kadDHT } from '@libp2p/kad-dht';
 import { webSockets } from '@libp2p/websockets';
 import { webTransport } from '@libp2p/webtransport';
 import { webRTC } from '@libp2p/webrtc';
+import { CryptoBlockchain } from "./CryptoBlockchain.js";
 
 export class p2p {
-    //@ts-expect-error
-    node: Libp2p;
+    node: Libp2p | Promise <Libp2p>;
+    blockchain: CryptoBlockchain;
 
     constructor() {
-        var node: any = createLibp2p({
+        this.blockchain = new CryptoBlockchain();
+        this.node = createLibp2p({
             transports: [tcp(), webSockets(), webTransport(), webRTC()],
             connectionEncryption: [noise()],
             streamMuxers: [mplex()],
             dht: [kadDHT()],
-        }).then(async () => {
-            this.node = node;
-            await node.start();
-            console.log('Libp2p started');
-            console.log('Listening on:');
-            node.getMultiaddrs().forEach((addr: any) => {
-                console.log(addr.toString());
-            });
         });
-        node.contentRouting.provide('1');
+    }
+
+    async init(): Promise<void> {
+        while (this.node instanceof Promise<Libp2p>) {}
+        await this.node.start();
+        console.log(this.node.peerId);
+
+        this.node.handle('/kalcoin', ({ connection, stream }) => {
+            
+        })
     }
 }
