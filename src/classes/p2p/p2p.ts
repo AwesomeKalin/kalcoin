@@ -6,10 +6,11 @@ import { kadDHT } from '@libp2p/kad-dht';
 import { webSockets } from '@libp2p/websockets';
 import { webTransport } from '@libp2p/webtransport';
 import { webRTC } from '@libp2p/webrtc';
-import { CryptoBlockchain } from "./CryptoBlockchain.js";
+import { CryptoBlockchain } from "../CryptoBlockchain.js";
+import { p2pMessage } from "./p2pMessage.js";
 
 export class p2p {
-    node: Libp2p | Promise <Libp2p>;
+    node: Libp2p | Promise<Libp2p>;
     blockchain: CryptoBlockchain;
 
     constructor() {
@@ -18,17 +19,20 @@ export class p2p {
             transports: [tcp(), webSockets(), webTransport(), webRTC()],
             connectionEncryption: [noise()],
             streamMuxers: [mplex()],
+            //@ts-expect-error
             dht: [kadDHT()],
         });
     }
 
     async init(): Promise<void> {
-        while (this.node instanceof Promise<Libp2p>) {}
+        while (this.node instanceof Promise<Libp2p>) { }
         await this.node.start();
         console.log(this.node.peerId);
 
-        this.node.handle('/kalcoin', ({ connection, stream }) => {
-            
+        this.node.handle('/kalcoin', async ({ stream }: { stream: any }) => {
+            for await (const message of stream) {
+                console.log(message);
+            }
         })
     }
 }
