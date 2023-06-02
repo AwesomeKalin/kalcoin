@@ -4,7 +4,7 @@
     "module": "ESNext",
     "strict": true,
     "esModuleInterop": true,
-    "moduleResolution": "nodenext",
+    "moduleResolution": "node",
     "outDir": "./build",
     "skipLibCheck": true,
     "declaration": true

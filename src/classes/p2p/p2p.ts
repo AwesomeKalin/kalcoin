@@ -7,7 +7,9 @@ import { webSockets } from '@libp2p/websockets';
 import { webTransport } from '@libp2p/webtransport';
 import { webRTC } from '@libp2p/webrtc';
 import { CryptoBlockchain } from "../CryptoBlockchain.js";
-import { p2pMessage } from "./p2pMessage.js";
+import { bootstrap } from "@libp2p/bootstrap";
+import { mdns } from '@libp2p/mdns';
+import { identifyService } from "libp2p/dist/src/identify/index.js";
 
 export class p2p {
     node: Libp2p | Promise<Libp2p>;
@@ -19,17 +21,34 @@ export class p2p {
             transports: [tcp(), webSockets(), webTransport(), webRTC()],
             connectionEncryption: [noise()],
             streamMuxers: [mplex()],
-            //@ts-expect-error
-            dht: [kadDHT()],
+            services: {
+                dht: kadDHT(),
+                identify: identifyService(),
+            },
+            peerDiscovery: [bootstrap({
+                list: [
+                    "/ip4/104.131.131.82/tcp/4001/ipfs/QmaCpDMGvV2BGHeYERUEnRQAwe3N8SzbUtfsmvsqQLuvuJ",
+                    "/dnsaddr/bootstrap.libp2p.io/ipfs/QmNnooDu7bfjPFoTZYxMNLWUQJyrVwtbZg5gBMjTezGAJN",
+                    "/dnsaddr/bootstrap.libp2p.io/ipfs/QmQCU2EcMqAqQPR2i9bChDtGNJchTbq5TbXJJ16u19uLTa",
+                ],
+                timeout: 1000, // in ms,
+                tagName: 'bootstrap',
+                tagValue: 50,
+                tagTTL: 120000 // in ms
+            }),
+            mdns()],
+            addresses: {
+                listen: ['/ip4/0.0.0.0/tcp/46823']
+            },
         });
     }
 
     async init(): Promise<void> {
-        while (this.node instanceof Promise<Libp2p>) { }
+        this.node = await Promise.resolve(this.node);
         await this.node.start();
         console.log(this.node.peerId);
 
-        this.node.handle('/kalcoin', async ({ stream }: { stream: any }) => {
+        this.node.handle('/kalcoin/1.0.0', async ({ stream }: { stream: any }) => {
             for await (const message of stream) {
                 console.log(message);
             }

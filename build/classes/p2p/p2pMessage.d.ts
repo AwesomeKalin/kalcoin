@@ -1,4 +1,4 @@
-/// <reference types="node" resolution-mode="require"/>
+/// <reference types="node" />
 import { CryptoBlock } from "../CryptoBlock.js";
 import { CryptoTransaction } from "../CryptoTransaction.js";
 export declare class p2pMessage {
