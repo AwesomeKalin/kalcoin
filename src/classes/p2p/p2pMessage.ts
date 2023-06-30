@@ -8,5 +8,5 @@ export class p2pMessage {
         const decodedData = JSON.parse(info.toString());
         const { type, data } = decodedData;
         return new p2pMessage(type, data);
-      }
+    }
 }

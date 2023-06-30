@@ -26,6 +26,7 @@
     "@snyk/protect": "latest",
     "bitcore-lib": "^10.0.5",
     "bitcore-message": "^1.0.4",
+    "it-pipe": "^3.0.1",
     "kalhash.js": "^1.0.0",
     "libp2p": "^0.45.9",
     "yargs": "^17.7.2"

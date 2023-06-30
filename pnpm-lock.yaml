@@ -44,6 +44,9 @@ dependencies:
   bitcore-message:
     specifier: ^1.0.4
     version: 1.0.4
+  it-pipe:
+    specifier: ^3.0.1
+    version: 3.0.1
   kalhash.js:
     specifier: ^1.0.0
     version: 1.0.0

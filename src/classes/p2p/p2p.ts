@@ -9,7 +9,9 @@ import { webRTC } from '@libp2p/webrtc';
 import { CryptoBlockchain } from "../CryptoBlockchain.js";
 import { bootstrap } from "@libp2p/bootstrap";
 import { mdns } from '@libp2p/mdns';
-import { identifyService } from "libp2p/dist/src/identify/index.js";
+import { identifyService } from "libp2p/identify";
+import { p2pMessage } from "./p2pMessage.js";
+import { pipe } from 'it-pipe';
 
 export class p2p {
     node: Libp2p | Promise<Libp2p>;
@@ -38,7 +40,7 @@ export class p2p {
             }),
             mdns()],
             addresses: {
-                listen: ['/ip4/0.0.0.0/tcp/46823']
+                listen: [`/ip4/0.0.0.0/tcp/${Math.floor(Math.random() * (65535 - 1024 + 1) + 1024).toString()}`]
             },
         });
     }
@@ -48,10 +50,26 @@ export class p2p {
         await this.node.start();
         console.log(this.node.peerId);
 
-        this.node.handle('/kalcoin/1.0.0', async ({ stream }: { stream: any }) => {
-            for await (const message of stream) {
-                console.log(message);
-            }
-        })
+        this.node.handle('/kalcoin/1.0.0', ({ stream }: { stream: any }) => {
+            console.log('Recieved message from peer')
+            pipe(
+                stream,
+                source => (async function () {
+                  for await (const msg of source) {
+                    console.log(msg.toString());
+                  }
+                })()
+              );
+        });
+    }
+
+    async sendData(data: p2pMessage): Promise<void> {
+        this.node = await Promise.resolve(this.node);
+        console.log(this.node.getProtocols());
+        console.log(this.node.getPeers());
+        for (var i = 0; i > this.node.getPeers().length; i++) {
+            const stream = await this.node.dialProtocol(this.node.getPeers()[i], '/kalcoin/1.0.0');
+            pipe([Buffer.from('Test')], stream);
+        }
     }
 }
