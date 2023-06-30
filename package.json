@@ -15,25 +15,25 @@
   "dependencies": {
     "@chainsafe/libp2p-noise": "^12.0.1",
     "@libp2p/bootstrap": "^8.0.0",
-    "@libp2p/floodsub": "^7.0.1",
-    "@libp2p/kad-dht": "^9.3.5",
+    "@libp2p/floodsub": "^7.0.2",
+    "@libp2p/kad-dht": "^9.3.8",
     "@libp2p/mdns": "^8.0.0",
-    "@libp2p/mplex": "^8.0.3",
-    "@libp2p/tcp": "^7.0.1",
-    "@libp2p/webrtc": "^2.0.4",
-    "@libp2p/websockets": "^6.0.1",
-    "@libp2p/webtransport": "^2.0.1",
+    "@libp2p/mplex": "^8.0.4",
+    "@libp2p/tcp": "^7.0.3",
+    "@libp2p/webrtc": "^2.0.11",
+    "@libp2p/websockets": "^6.0.3",
+    "@libp2p/webtransport": "^2.0.2",
     "@snyk/protect": "latest",
     "bitcore-lib": "^10.0.5",
     "bitcore-message": "^1.0.4",
     "kalhash.js": "^1.0.0",
-    "libp2p": "^0.45.4",
+    "libp2p": "^0.45.9",
     "yargs": "^17.7.2"
   },
   "devDependencies": {
-    "@types/node": "^20.2.4",
+    "@types/node": "^20.3.2",
     "@types/yargs": "^17.0.24",
-    "typescript": "^5.0.4"
+    "typescript": "^5.1.6"
   },
   "snyk": true
 }
