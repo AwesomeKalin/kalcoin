@@ -1,0 +1,29 @@
+name: Upload to Archive.org
+on: push
+
+jobs:
+  job:
+    name: Upload
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Install dependencies
+        run: |
+          pip install internetarchive
+
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+            fetch-depth: 0
+            
+      - name: Create bundle
+        run: git bundle create kalcoin-${{ github.sha }}.bundle --all
+
+      - name: Upload file to archive.org
+        run: |
+          ia configure -u ${{ secrets.IA_USER }} -p ${{ secrets.IA_PWD }}
+          ia upload kalcoin-${{ github.sha }} kalcoin-${{ github.sha }}.bundle --metadata="mediatype:software" --metadata="creator:AwesomeKalin55" --metadata="title:kalcoin-${{ github.sha }}" --metadata="scanner:Kalcoin Auto-Archive" --metadata="collection:open_source_software" --metadata="subject:kalhash;bitcoin;litecoin;blockchain;crypto;cryptocurrency;mit;awesomekalin" --metadata="originalurl:https://github.com/AwesomeKalin/kalcoin" --retries 20
