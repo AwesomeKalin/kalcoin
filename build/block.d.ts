@@ -11,6 +11,6 @@ export declare class Block {
     block_id: string;
     difficulty: number;
     constructor(prev_block_id: string, block_height: number, coinbase_output_address: string, difficulty: number, coinbase_tag?: string);
-    addTransaction(tx: Transaction): void;
+    addTransaction(tx: Transaction): false | undefined;
     mine(): Promise<void>;
 }
