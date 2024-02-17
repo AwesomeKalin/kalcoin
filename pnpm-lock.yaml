@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  ecdsa-secp256k1:
+    specifier: ^1.0.6
+    version: 1.0.6
   kalhash.js:
     specifier: ^1.1.0
     version: 1.1.0
@@ -24,6 +27,11 @@ packages:
     dependencies:
       undici-types: 5.26.5
     dev: true
+
+  /ecdsa-secp256k1@1.0.6:
+    resolution: {integrity: sha512-1XK3Rz1lBbpgAWBSD6OR3vJbjbC3BHhS7XIC+yCjRoonfYK4uZ1uLd800TUul9F4ArOLSkcgVLLn46xaZ+y/aQ==}
+    engines: {node: '>=12.0.0'}
+    dev: false
 
   /kalhash.js@1.1.0:
     resolution: {integrity: sha512-Q7BWieCr8bJoqvrlcEeS2C3hIA3hBQenZ1w8k+Noqi0mU3VoSzxj0HkyLSzzh94TsGQYptwIQtg8xs+TDbjAmw==}

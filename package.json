@@ -16,6 +16,7 @@
   },
   "type": "module",
   "dependencies": {
+    "ecdsa-secp256k1": "^1.0.6",
     "kalhash.js": "^1.1.0"
   }
 }

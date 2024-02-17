@@ -22,7 +22,9 @@ export class Block {
     }
 
     addTransaction(tx: Transaction) {
-        // TODO: Verification code
+        for (var i = 0; i < tx.inputs.length; i++) {
+            if (!tx.inputs[i].verifySig(tx.outputs)) return false;
+        }
         this.transactions.push(tx);
         this.tx_hashes.push(kalhash(JSON.stringify(tx)));
     }
