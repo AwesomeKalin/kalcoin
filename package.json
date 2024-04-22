@@ -12,11 +12,12 @@
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^20.11.19",
+    "@types/secp256k1": "^4.0.6",
     "typescript": "^5.3.3"
   },
   "type": "module",
   "dependencies": {
-    "ecdsa-secp256k1": "^1.0.6",
-    "kalhash.js": "^1.1.0"
+    "kalhash.js": "^1.1.0",
+    "secp256k1": "^5.0.0"
   }
 }

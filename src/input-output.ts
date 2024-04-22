@@ -1,25 +1,22 @@
 import { kalhash } from "kalhash.js";
-//@ts-expect-error
-import ecdsa from 'ecdsa-secp256k1';
+import secp256k1 from 'secp256k1';
 
 export class Input {
     txid: string;
     index: number;
     sig: string;
-    pubkeyx: string;
-    pubkeyy: string;
+    pubkey: string;
 
-    constructor(txid: string, index: number, sig: string, pubkeyx: string, pubkeyy: string) {
+    constructor(txid: string, index: number, sig: string, pubkey: string) {
         this.txid = txid;
         this.index = index;
         this.sig = sig;
-        this.pubkeyx = pubkeyx;
-        this.pubkeyy = pubkeyy;
+        this.pubkey = pubkey;
     }
 
-    verifySig(outputs: Output[]) {
+    verifySig(outputs: Output[]): boolean {
         const toVerify: string = kalhash(JSON.stringify({ txid: this.txid, index: this.index, outputs }));
-        return ecdsa.verify({ x: this.pubkeyx, y: this.pubkeyy }, this.sig, BigInt(parseInt(toVerify, 16)));
+        return secp256k1.ecdsaVerify(Buffer.from(this.sig), Buffer.from(toVerify), Buffer.from(this.pubkey));
     }
 }
 
